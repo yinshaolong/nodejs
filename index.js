@@ -12,16 +12,17 @@ function fileSync(){
 //non-blocking asynchronous way
 function fileAsync(){
     fs.readFile("./txt/start.txt", "utf-8", (err, file_content) => {
+        if (err) return console.log("ERROR! 💥");
         fs.readFile(`./txt/${file_content}.txt`, "utf-8", (err, data) => {
             console.log(data);
 
             fs.readFile(`./txt/append.txt`, "utf-8", (err, data2) => {
             console.log(data2)
-
+                //nested another readFile and a writeFile inside that has access to data and data2
                 fs.writeFile("./txt/final.txt", `${data}\n${data2}`, "utf-8", err => {
                     console.log("Your file has been written");
                 });
-        });
+            });
         });
     }); //takes two arguments, the path to the file and the callback function -> error always first and then data
     console.log("Will read file! This first");
