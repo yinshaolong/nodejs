@@ -40,9 +40,9 @@ const server = http.createServer((request, response)=>{  //takes callback functi
 
     const pathName = request.url;
     if (pathName === '/' || pathName === '/overview'){
-        console.log("this is the overview");
+        response.end("This is the overview");
     }else if (pathName === '/product'){
-        console.log("this is the product");
+        response.end("This is the product");
     }
 
     response.end("hello from the server"); //sends a response to the client -> printed out to the display
