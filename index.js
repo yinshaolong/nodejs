@@ -34,6 +34,12 @@ function fileAsync(){
 
 /*******################### SERVER ###################*********/
 
+
+const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf-8'); //executed only once so can be synchronous
+const jsonDataObject = JSON.parse(data);
+
+
+
 const server = http.createServer((request, response)=>{  //takes callback function that is called every time there is a new request to the server
     // console.log(request); //gives list of info about the request -> headers, url, method, etc.
     console.log(request.url); //prints out the url that was requested i.e. / -> good for determining an id like /product?id=1234&abc=1234
@@ -48,16 +54,13 @@ const server = http.createServer((request, response)=>{  //takes callback functi
     }
     
     else if(pathName === '/api'){
-        fs.readFile(`${__dirname}/dev-data/data.json`, 'utf-8', (err, data) => {
-            const jsonData = JSON.parse(data);
-            console.log(jsonData);
+            console.log(jsonDataObject);
 
             response.writeHead(200, { //status code 200 -> okay
             
                 'Content-type': "application/json" //specifies the type of content that is being sent back -> json
             })
             response.end(data); //end needs a STRING so sending data, not json product
-        })
     }
     
     else{
