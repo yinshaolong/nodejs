@@ -40,9 +40,12 @@ const server = http.createServer((request, response)=>{  //takes callback functi
 
     const pathName = request.url;
     if (pathName === '/' || pathName === '/overview'){
-        response.end("This is the overview");
+        response.end("This is the OVERVIEW");
     }else if (pathName === '/product'){
-        response.end("This is the product");
+        response.end("This is the PRODUCT");
+    }else{
+        response.writeHead(404); //writes the header of the response -> takes status code
+        response.end("Page not found!");
     }
 
     response.end("hello from the server"); //sends a response to the client -> printed out to the display
