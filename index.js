@@ -1,7 +1,9 @@
 const fs = require('fs'); //gives access to the file system
 const http = require('http'); // gives networking capabilities i.e. building a n http server
+const url = require('url');
 
-//################### FILES ###################
+
+/*******################### FILES ###################*********/
 
 function fileSync(){
     const textIn = fs.readFileSync('./txt/input.txt', "utf-8") //takes two arguments, the path to the file and the character encoding to be used to read the file
@@ -30,17 +32,27 @@ function fileAsync(){
     console.log("Will read file! This first");
 };
 
-//################### SERVER ###################
+/*******################### SERVER ###################*********/
 
-const server = http.createServer((request, response)=>{  //takes callback function as an argument -> request and response
-    response.end("hello from the server"); //sends a response to the client
+const server = http.createServer((request, response)=>{  //takes callback function that is called every time there is a new request to the server
+    // console.log(request); //gives list of info about the request -> headers, url, method, etc.
+    console.log(request.url); //prints out the url that was requested i.e. / -> good for determining an id like /product?id=1234&abc=1234
+
+    const pathName = request.url;
+    if (pathName === '/' || pathName === '/overview'){
+        console.log("this is the overview");
+    }else if (pathName === '/product'){
+        console.log("this is the product");
+    }
+
+    response.end("hello from the server"); //sends a response to the client -> printed out to the display
 })
 
-//starts the server and listens to incoming requests
-server.listen(8000, '127.0.0.1', () =>{
-    console.log("Listening to requests on port 8000");
-}) //takes port, host (in this case the local host), callback function
+
+server.listen(8000, '127.0.0.1', () =>{ //starts the server and listens to incoming requests -> takes port, host (in this case the local host), callback function
+    console.log("Listening to requests on port 8000"); //goes to the terminal
+})
 
 
 // fileSync();
-fileAsync(); 
+// fileAsync(); 
