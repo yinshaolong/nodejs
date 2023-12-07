@@ -44,11 +44,14 @@ const server = http.createServer((request, response)=>{  //takes callback functi
     }else if (pathName === '/product'){
         response.end("This is the PRODUCT");
     }else{
-        response.writeHead(404); //writes the header of the response -> takes status code
-        response.end("Page not found!");
+        response.writeHead(404, { 
+            'Content-type':"text/html", //specifies the type of content that is being sent back -> html
+            'my-own-header': 'hello-world'
+        });
+        response.end("<h1>Page not found!</h1>"); //MUST ALWAYS be after the content-type and header
     }
 
-    response.end("hello from the server"); //sends a response to the client -> printed out to the display
+    response.end(`hello from the server`); //sends a response to the client -> printed out to the display
 })
 
 
