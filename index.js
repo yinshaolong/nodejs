@@ -11,9 +11,13 @@ function fileSync(){
 }
 //non-blocking asynchronous way
 function fileAsync(){
-    fs.readFile("./txt/start.txt", "utf-8", (err, data) => {console.log(data)}) //takes two arguments, the path to the file and the callback function -> error always first and then data
+    fs.readFile("./txt/start.txt", "utf-8", (err, file_content) => {
+        fs.readFile(`./txt/${file_content}.txt`, "utf-8", (err, data) => {
+            console.log(data)
+        });
+    }); //takes two arguments, the path to the file and the callback function -> error always first and then data
     console.log("Will read file! This first");
-}
+};
 
-fileSync();
+// fileSync();
 fileAsync();
